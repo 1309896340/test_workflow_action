@@ -3,13 +3,24 @@ run-name: "自动化测试集成"
 on: [push]
 jobs:
   code-test:
+    name: "测试Python ${{ matrix.python-version }}"
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
+      
     steps:
       - name: "从仓库克隆代码"
         uses: actions/checkout@v5
 
-      - name: "显示当前python版本"
-        run: python -c "import sys; print(sys.version)"
+      - name: "配置Python ${{ matrix.python-version }}"
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
 
       - name: "测试运行main.py"
-        run: python main.py
+        run: |
+          python -c "import sys; print(f'使用Python{sys.version}运行')"
+          python main.py
