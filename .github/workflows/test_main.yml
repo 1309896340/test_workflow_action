@@ -2,7 +2,7 @@ name: "尝试使用actions做CI"
 run-name: "自动化测试集成"
 on: [push]
 jobs:
-  代码测试:
+  code-test:
     runs-on: ubuntu-latest
     steps:
       - name: "从仓库克隆代码"
